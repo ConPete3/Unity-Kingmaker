@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using System.IO;
 
 public class KingmakerSetupWizard : EditorWindow
@@ -20,7 +21,23 @@ public class KingmakerSetupWizard : EditorWindow
         CreateHexGridConfig();
         CreatePrefabs();
         SetupScene();
-        Debug.Log("Kingmaker setup completed successfully!");
+        SaveCurrentScene();
+        Debug.Log("Kingmaker setup completed successfully! Scene saved.");
+    }
+
+    [MenuItem("Kingmaker/Setup Scene Only")]
+    public static void SetupSceneOnly()
+    {
+        SetupScene();
+        SaveCurrentScene();
+        Debug.Log("Scene setup completed and saved!");
+    }
+
+    private static void SaveCurrentScene()
+    {
+        var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
     }
 
     private void OnGUI()
@@ -28,9 +45,23 @@ public class KingmakerSetupWizard : EditorWindow
         GUILayout.Label("Kingmaker Setup Wizard", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
+        EditorGUILayout.HelpBox(
+            "Run Full Setup to create all assets and configure the scene.\n" +
+            "The GameManager will initialize the hex grid with 7 territories on Play.",
+            MessageType.Info);
+
+        GUILayout.Space(10);
+
         if (GUILayout.Button("Run Full Setup", GUILayout.Height(40)))
         {
             RunFullSetup();
+        }
+
+        GUILayout.Space(10);
+
+        if (GUILayout.Button("Setup Scene Only (if assets exist)", GUILayout.Height(30)))
+        {
+            SetupSceneOnly();
         }
 
         GUILayout.Space(20);
@@ -49,7 +80,10 @@ public class KingmakerSetupWizard : EditorWindow
         if (GUILayout.Button("6. Create Prefabs"))
             CreatePrefabs();
         if (GUILayout.Button("7. Setup Scene"))
+        {
             SetupScene();
+            SaveCurrentScene();
+        }
     }
 
     private static void CreateFolders()
