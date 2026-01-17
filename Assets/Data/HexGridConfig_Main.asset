@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f846b69d4305b884d9c6d074b07c28ed, type: 3}
+  m_Name: HexGridConfig_Main
+  m_EditorClassIdentifier: Assembly-CSharp::HexGridConfig
+  radius: 1
+  hexSize: 1
+  hexTilePrefab: {fileID: 5380028589297541906, guid: d4278ba526d471241ae53d8c36230aa4, type: 3}
+  capitalTileData: {fileID: 11400000, guid: dad37ff87cbb0f745bd8eb35ff96beaf, type: 2}
+  defaultTileData: {fileID: 11400000, guid: 0ab4d4250e8647a46be0267910bcfb3c, type: 2}
+  plainsNorthData: {fileID: 11400000, guid: 0ab4d4250e8647a46be0267910bcfb3c, type: 2}
+  forestEastData: {fileID: 11400000, guid: 52d1387848f08e74c94ef96177258456, type: 2}
+  villageNEData: {fileID: 11400000, guid: fe6b58724edd33f44b61f67ca434a52a, type: 2}
+  riverWestData: {fileID: 11400000, guid: 87172fb2e59de7944892d0a1f07d862a, type: 2}
+  mountainSouthData: {fileID: 11400000, guid: fbaee053477634349ae624fe303e6696, type: 2}
+  wildernessSEData: {fileID: 11400000, guid: ad61d127d685a694aaa940b6d3691821, type: 2}

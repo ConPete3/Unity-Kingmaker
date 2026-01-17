@@ -16,6 +16,14 @@ public class HexGridConfig : ScriptableObject
     [SerializeField] private TileData capitalTileData;
     [SerializeField] private TileData defaultTileData;
 
+    [Header("Territory Tile Data (6 Directions)")]
+    [SerializeField] private TileData plainsNorthData;      // Direction 0: East -> North equivalent
+    [SerializeField] private TileData forestEastData;       // Direction 1: Northeast
+    [SerializeField] private TileData villageNEData;        // Direction 2: Northwest -> NE territory
+    [SerializeField] private TileData riverWestData;        // Direction 3: West
+    [SerializeField] private TileData mountainSouthData;    // Direction 4: Southwest -> South
+    [SerializeField] private TileData wildernessSEData;     // Direction 5: Southeast
+
     public int Radius => radius;
     public float HexSize => hexSize;
     public float HexWidth => hexSize * 2f;
@@ -28,6 +36,42 @@ public class HexGridConfig : ScriptableObject
     {
         if (ring == 0) return capitalTileData;
         return defaultTileData;
+    }
+
+    public TileData GetTileDataForCoordinates(HexCoordinates coords)
+    {
+        if (coords == HexCoordinates.Zero) return capitalTileData;
+
+        int direction = GetDirectionFromCenter(coords);
+        return GetTileDataForDirection(direction);
+    }
+
+    private int GetDirectionFromCenter(HexCoordinates coords)
+    {
+        // Convert hex coordinates to an angle and determine direction
+        float angle = Mathf.Atan2(coords.R * 1.5f, coords.Q * Mathf.Sqrt(3f) + coords.R * Mathf.Sqrt(3f) / 2f);
+        float degrees = angle * Mathf.Rad2Deg;
+
+        // Normalize to 0-360
+        if (degrees < 0) degrees += 360f;
+
+        // Map to 6 directions (each 60 degrees)
+        int direction = Mathf.FloorToInt((degrees + 30f) / 60f) % 6;
+        return direction;
+    }
+
+    private TileData GetTileDataForDirection(int direction)
+    {
+        switch (direction)
+        {
+            case 0: return plainsNorthData ?? defaultTileData;
+            case 1: return forestEastData ?? defaultTileData;
+            case 2: return villageNEData ?? defaultTileData;
+            case 3: return riverWestData ?? defaultTileData;
+            case 4: return mountainSouthData ?? defaultTileData;
+            case 5: return wildernessSEData ?? defaultTileData;
+            default: return defaultTileData;
+        }
     }
 
     public Vector3 HexToWorldPosition(HexCoordinates coords)

@@ -30,7 +30,7 @@ public class HexGridManager : MonoBehaviour
             {
                 foreach (var coords in GetRingCoordinates(ring))
                 {
-                    TileData data = config.GetTileDataForRing(ring);
+                    TileData data = config.GetTileDataForCoordinates(coords);
                     CreateHex(coords, data);
                 }
             }
